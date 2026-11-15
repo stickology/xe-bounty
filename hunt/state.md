@@ -32,3 +32,11 @@ board: https://bounty.xe.network (API: /v1/tickets?kind=bounty&status=all&limit=
   signature+keying, blockQuarantineKey, copied+signature -> 0 results, 2026-11-15).
 - ACTION: when xeprotocol/xe default branch merges PR #189 (quarantine key becomes hash:signature),
   this is live first-to-report. Claimed tier Medium (match XE-0098). User files privately from own browser.
+
+## Open-PR fix-bypass audit (session 2, 2026-11-15) — no bypass found
+- PR #564 (DecodeVote panic, XE-13401): COMPLETE — len(data) bound check present before copy.
+- PR #556 (gossip multisig delivery + reject invalid): reasonable, no gap.
+- PR #554 (tunnel consumer auth, XE-13200/13246): COMPLETE — peerID bound to PeerForAccount(consumer), fail-closed.
+- PR #534 (reject phantom votes, XE-532): reasonable; early votes now rejected not buffered (liveness tradeoff, not a bug).
+- PR #553 (keyset case normalization, XE-13193/13390): covers dao_keyset/oracle/minter/timekeepers + verification.
+- Only clean finding this whole hunt: PR #189 incomplete fix (SUBMITTED by user, private, ~2026-11-15).
