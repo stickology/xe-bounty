@@ -39,4 +39,4 @@ board: https://bounty.xe.network (API: /v1/tickets?kind=bounty&status=all&limit=
 - PR #554 (tunnel consumer auth, XE-13200/13246): COMPLETE — peerID bound to PeerForAccount(consumer), fail-closed.
 - PR #534 (reject phantom votes, XE-532): reasonable; early votes now rejected not buffered (liveness tradeoff, not a bug).
 - PR #553 (keyset case normalization, XE-13193/13390): covers dao_keyset/oracle/minter/timekeepers + verification.
-- Only clean finding this whole hunt: PR #189 incomplete fix (SUBMITTED by user, private, ~2026-11-15).
+- Only clean finding this whole hunt: PR #189 incomplete fix => SUBMITTED as ticket XE-14009 (private) by user, 2026-11-15. DO NOT re-file.
