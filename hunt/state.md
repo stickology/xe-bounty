@@ -14,3 +14,21 @@ board: https://bounty.xe.network (API: /v1/tickets?kind=bounty&status=all&limit=
 - SpendableBalances: XE-13663, XE-2375
 - lease_renew attestation/cert/LockedR: XE-0010, XE-0085, XE-10904, XE-13248, XE-8377
 - VM hostfwd 0.0.0.0 / GPU FLR / SLIRP / template injection: XE-1438, XE-6783, XE-11315
+
+## Deep sweep at 89a542e (session 2) — all shipped-code candidates are duplicates
+- Badger key layout / vote hex case / composite keys: XE-7696, XE-9117, XE-2862 class
+- Canonical-encoding non-injectivity (Asset 8-byte pad, Previous/AccessPubKey/Representative zero): XE-6855, XE-11466, XE-0060
+- Sync quarantine keyed on hash: XE-6998, XE-0098 (fix proposed in PR #189, unmerged)
+- isRetryableError misclassification: XE-8699, XE-10240
+- Rep allowlist / spendable: XE-2862, XE-13663
+
+## HELD FINDING (not a shipped bug yet) — file on PR #189 merge
+- Candidate: PR #189 signature-keyed quarantine is an INCOMPLETE FIX. Key = hash+":"+signature,
+  but signature is public and travels with the block. Attacker copies genuine hash+signature,
+  tampers a body field -> same quarantine key -> genuine block suppressed (XE-0098/XE-6998 still live).
+- Proof: hunt/reports/pr189-quarantine/ (report.md + poc_copysig_test.go). Test PASSES against
+  pr189 branch (356a7df): go test ./net/ -run TestQuarantineCopiedSignaturePoison -v.
+- Dedup: board has NO ticket on signature-keyed quarantine / incomplete #189 (searched
+  signature+keying, blockQuarantineKey, copied+signature -> 0 results, 2026-11-15).
+- ACTION: when xeprotocol/xe default branch merges PR #189 (quarantine key becomes hash:signature),
+  this is live first-to-report. Claimed tier Medium (match XE-0098). User files privately from own browser.
