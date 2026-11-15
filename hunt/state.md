@@ -40,3 +40,13 @@ board: https://bounty.xe.network (API: /v1/tickets?kind=bounty&status=all&limit=
 - PR #534 (reject phantom votes, XE-532): reasonable; early votes now rejected not buffered (liveness tradeoff, not a bug).
 - PR #553 (keyset case normalization, XE-13193/13390): covers dao_keyset/oracle/minter/timekeepers + verification.
 - Only clean finding this whole hunt: PR #189 incomplete fix => SUBMITTED as ticket XE-14009 (private) by user, 2026-11-15. DO NOT re-file.
+
+## Open-PR audit batch 2 (session 2, 2026-11-15) — lanjutan, no clean finding
+- PR #513 (lease ops require multisig threshold, #506): COMPLETE — IsSpendingOp now covers all value-moving lease ops; only receive/genesis use single-sig (correct).
+- PR #522 (staged lease_settle validation): adds asset/source/lease/amount checks but staged still omits the settle grace-window check that full admission enforces -> plausible staged-vs-full divergence, but routes into quorum-withhold-stall family (XE-4145/5062). Not clean enough to file.
+- PR #521 (TOCTOU inbound conn cap, XE-1298/1738): CAS reserve + 10s handshake timer. Plausible gap: a peer stalling muxer past 10s gets its slot released while keeping the connection -> exceed maxInbound. Speculative (needs libp2p muxer stall), routes into XE-1298/1738 family. Not clean.
+- PR #519 (chat maxPerAccount<=0 panic guard): COMPLETE; config value, not attacker-controlled.
+- PR #517 (sanitize advertised features, XE-1081): COMPLETE — dedup+known-filter at record time; GetReadiness reads sanitized caps.
+- Not audited (low impact / crowded dup family): #541 causal timestamps, #536/#535 lease_cancel rollback (XE-5859 family, 10+ tickets), #524/#523 retry/err-report, #520/#516 orphan VM, #518 policy micro-XUSD, #515 cost format, #514 hash return, #542/#537 ad/request freshness.
+
+## CONCLUSION (session 2): only clean submittable finding this hunt = PR #189 -> XE-14009 (submitted). No second clean finding on shipped code or open PRs.
